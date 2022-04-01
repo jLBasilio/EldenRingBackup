@@ -69,5 +69,7 @@ set "baseDir=%appdata%\EldenRing"
 		copy "%~f0" "%baseDir%"
 	)
 	
-	schtasks /create /sc onlogon /tn "Elden Ring Backup - Logon" /tr "%baseDir%\%~n0%~x0"
-	schtasks /create /sc daily /tn "Elden Ring Backup - Daily" /tr "%baseDir%\%~n0%~x0"
+	set "taskNameLogon=Elden Ring Backup - Logon"
+	set "taskNameDaily=Elden Ring Backup - Daily"
+	schtasks /query /TN "%taskNameLogon%" > nul 2>&1 || schtasks /create /sc onlogon /tn "%taskNameLogon%" /tr "%baseDir%\%~n0%~x0" /RL HIGHEST
+	schtasks /query /TN "%taskNameDaily%" > nul 2>&1 || schtasks /create /sc daily /tn "%taskNameDaily%" /tr "%baseDir%\%~n0%~x0" /RL HIGHEST
