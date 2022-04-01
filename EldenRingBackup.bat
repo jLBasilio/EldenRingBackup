@@ -26,10 +26,9 @@ set "baseDir=%appdata%\EldenRing"
 	
 	if not exist "%backupsPath%" (
 		set "isFirstRun=y"
+		mkdir "%backupsPath%"
 		goto scheduled_task
 	)
-	
-	mkdir %backupsPath%
 	
 	set "hr=%time:~0,2%"
 	if "%hr:~0,1%" equ " " (
@@ -39,7 +38,7 @@ set "baseDir=%appdata%\EldenRing"
 	set "backupFolderName=%date:~-4,4%%date:~-10,2%%date:~-7,2%_%hr%%time:~3,2%%time:~6,2%"
 	set "destination=%backupsPath%\%backupFolderName%"
 	
-	mkdir %destination%
+	mkdir "%destination%"
 
 :do_backup
 	for /f %%a in ('dir /b /a-d "%fullPath%"') do (
@@ -65,7 +64,7 @@ set "baseDir=%appdata%\EldenRing"
 		exit
 	)
 	
-	if not "%~dp0" == "%baseDir%" (
+	if not "%~dp0" == "%baseDir%\" (
 		echo "%~f0"
 		copy "%~f0" "%baseDir%"
 	)
